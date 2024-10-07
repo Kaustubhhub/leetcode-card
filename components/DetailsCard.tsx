@@ -1,6 +1,7 @@
 'use client'
 import axios from 'axios'
 import { useState } from 'react'
+import { DisplayCard } from './DisplayCard'
 
 export const DetailsCard = () => {
     const [username, setUsername] = useState('')
@@ -13,7 +14,7 @@ export const DetailsCard = () => {
                 username: username,
             })
             console.log('response : ', response)
-            setData(response)
+            setData(response.data)
         } catch (e) {
             console.error(e)
         } finally {
@@ -60,11 +61,7 @@ export const DetailsCard = () => {
                 </div>
             </div>
 
-            {username === '' && 
-                <div className='flex justify-center p-10'>
-                    Please enter username
-                </div>
-            }
+            {username === '' && <div className="flex justify-center p-10">Please enter username</div>}
 
             {loading && (
                 <div className="pt-40">
@@ -87,6 +84,11 @@ export const DetailsCard = () => {
                         </svg>
                         <span className="sr-only">Loading...</span>
                     </div>
+                </div>
+            )}
+            {Object.keys(data).length > 0 && (
+                <div className='p-10'>
+                    <DisplayCard data={data} username={username} />
                 </div>
             )}
         </div>
